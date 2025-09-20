@@ -1,5 +1,5 @@
-import { useNavigation } from "../../core/Navigation";
-import { Container, MenuButton } from "../../shared/ui";
+import { useNavigation } from "@/core/Navigation";
+import { Container, MenuButton } from "@/shared/ui";
 
 type TProps = {
   children: React.ReactNode;

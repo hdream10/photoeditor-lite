@@ -1,6 +1,6 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { withLayout } from "../Layout";
-import { TNavigation } from "../../core/Navigation";
+import { TNavigation } from "@/core/Navigation";
 import { SCREENS_WITH_COMPONENT } from "./constants";
 
 const Drawer = createDrawerNavigator<TNavigation>();

@@ -1,7 +1,7 @@
-import { SCREENS } from "../../core/Navigation";
-import { Home } from "../../pages/Home";
-import { MyPhotos } from "../../pages/MyPhotos";
-import { System } from "../../pages/System";
+import { SCREENS } from "@/core/Navigation";
+import { Home } from "@/pages/Home";
+import { MyPhotos } from "@/pages/MyPhotos";
+import { System } from "@/pages/System";
 
 export const SCREENS_WITH_COMPONENT = [
   {
