@@ -3,6 +3,8 @@ import type {
   TBaseDependencies,
   TDisposer,
   TObserver,
+  TWrappedActions,
+  TActions,
 } from "./types";
 
 class Store<
@@ -12,7 +14,7 @@ class Store<
 > {
   private readonly slice: TSlice;
 
-  private readonly dependencies: TDependencies;
+  private readonly actions: TActions<TState> = {};
 
   private disposers: TDisposer[] = [];
 
@@ -21,27 +23,42 @@ class Store<
     {
       dependencies,
       observers = [],
+      actions = {},
     }: {
       dependencies: TDependencies;
       observers?: TObserver<TDependencies, TState>[];
+      actions?: TWrappedActions<TState>;
     }
   ) {
     this.slice = slice;
-    this.dependencies = dependencies;
 
-    this.initObservers(observers);
+    this.initActions(actions, dependencies);
+    this.initObservers(observers, dependencies);
   }
 
   public get() {
     return {
       slice: this.slice,
+      actions: this.actions,
       destroy: this.destroy,
     };
   }
 
-  private initObservers(observers: TObserver<TDependencies, TState>[]) {
+  private initActions(
+    actions: TWrappedActions<TState>,
+    dependencies: TDependencies
+  ) {
+    Object.entries(actions).forEach(([key, action]) => {
+      this.actions[key] = action(dependencies, this.slice.getState());
+    });
+  }
+
+  private initObservers(
+    observers: TObserver<TDependencies, TState>[],
+    dependencies: TDependencies
+  ) {
     observers.forEach((observer) => {
-      this.disposers.push(observer(this.dependencies, this.slice.getState()));
+      this.disposers.push(observer(dependencies, this.slice.getState()));
     });
   }
 
