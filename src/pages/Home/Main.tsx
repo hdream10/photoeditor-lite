@@ -1,10 +1,11 @@
-import React from "react";
+import { CameraControl } from "@/widgets/CameraControl";
 import { Text, StyleSheet } from "react-native";
 
 const Main = () => {
   return (
     <>
       <Text style={styles.title}>Главная</Text>
+      <CameraControl />
     </>
   );
 };

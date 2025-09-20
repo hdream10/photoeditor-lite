@@ -10,7 +10,7 @@ type TCustomStore<TSlice> = {
 
 type TProps<TSlice, TSelectedState> = {
   customStore: TCustomStore<TSlice>;
-  selector: (state: ExtractState<TSlice>) => TSelectedState;
+  selector?: (state: ExtractState<TSlice>) => TSelectedState;
 };
 
 const useBaseStore = <
@@ -18,7 +18,7 @@ const useBaseStore = <
   TSelectedState = ExtractState<TSlice>
 >({
   customStore,
-  selector,
+  selector = (state) => state as TSelectedState,
 }: TProps<TSlice, TSelectedState>): [
   TSelectedState,
   Record<string, unknown>
