@@ -1,17 +1,16 @@
-import React from 'react';
-import { StatusBar, useColorScheme } from 'react-native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import AppContent from './AppContent';
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { StatusBar } from "expo-status-bar";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { AppNavigator } from "./navigation/AppNavigator";
 
-const App: React.FC = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
+export const App: React.FC = () => {
   return (
     <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
+      <NavigationContainer>
+        <StatusBar style="auto" />
+        <AppNavigator />
+      </NavigationContainer>
     </SafeAreaProvider>
   );
 };
-
-export default App;
