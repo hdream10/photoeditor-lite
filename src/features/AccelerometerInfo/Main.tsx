@@ -1,7 +1,7 @@
-import { Text } from "@/shared/ui";
+import { View } from "./ui";
 
 const Main = () => {
-  return <Text>AccelerometerInfo</Text>;
+  return <View />;
 };
 
 export default Main;
