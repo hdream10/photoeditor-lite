@@ -1,4 +1,4 @@
-import { getSystemInfo } from "./actions";
+import { getSystemInfo } from "./observers";
 import { TCoreApi } from "./types";
 
 type TProps = {
