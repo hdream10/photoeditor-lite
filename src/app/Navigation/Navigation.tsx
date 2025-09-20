@@ -1,33 +1,28 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { TNavigation } from "./types";
-import { SCREENS } from "./config";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { withLayout } from "../Layout";
+import { TNavigation } from "../../core/Navigation";
+import { SCREENS_WITH_COMPONENT } from "./constants";
 
-const Tab = createBottomTabNavigator<TNavigation>();
+const Drawer = createDrawerNavigator<TNavigation>();
 
 const Navigation = () => {
   return (
-    <Tab.Navigator
+    <Drawer.Navigator
       screenOptions={{
         headerShown: false,
-        tabBarStyle: {
-          backgroundColor: "#FFFFFF",
-          borderTopWidth: 1,
-          borderTopColor: "#E5E5EA",
-        },
-        tabBarActiveTintColor: "#007AFF",
-        tabBarInactiveTintColor: "#8E8E93",
       }}
     >
-      {SCREENS.map((screen) => (
-        <Tab.Screen
+      {SCREENS_WITH_COMPONENT.map((screen) => (
+        <Drawer.Screen
+          key={screen.name}
           name={screen.name}
-          component={screen.component}
+          component={withLayout(screen.component)}
           options={{
-            tabBarLabel: screen.label,
+            drawerLabel: screen.label,
           }}
         />
       ))}
-    </Tab.Navigator>
+    </Drawer.Navigator>
   );
 };
 
