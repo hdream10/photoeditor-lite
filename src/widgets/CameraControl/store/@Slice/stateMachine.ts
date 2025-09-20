@@ -18,6 +18,13 @@ export enum EEvents {
 const MACHINE_ID = "camera";
 
 const stateMachine = createMachine({
+  types: {} as {
+    events:
+      | { type: typeof EEvents.START_GET_PERMISSION }
+      | { type: typeof EEvents.SET_PERMISSION_GRANTED }
+      | { type: typeof EEvents.SET_PERMISSION_DENIED }
+      | { type: typeof EEvents.SET_PERMISSION_FAILED };
+  },
   id: MACHINE_ID,
   initial: EState.IDLE,
   states: {
@@ -41,6 +48,8 @@ const stateMachine = createMachine({
         },
       },
     },
+    [EState.PERMISSION_GRANTED]: {},
+    [EState.PERMISSION_DENIED]: {},
     [EState.PERMISSION_FAILED]: {
       on: {
         [EEvents.START_GET_PERMISSION]: {
