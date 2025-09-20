@@ -1,18 +1,8 @@
-import { getSystemInfo } from "./observers";
-import { TCoreApi } from "./types";
+import { getSystemInfo } from "./actions";
+import { TDependencies } from "./types";
 
-type TProps = {
-  coreApi: TCoreApi;
-};
-
-const createStore = ({ coreApi }: TProps) => {
-  const systemInfo = getSystemInfo({ coreApi });
-
-  return {
-    state: {
-      ...systemInfo,
-    },
-  };
+const createStore = ({ coreApi }: TDependencies) => {
+  return getSystemInfo({ coreApi });
 };
 
 export default createStore;

@@ -1,21 +1,31 @@
 import { useEffect } from "react";
 import { useStore } from "zustand";
+import { ExtractState, StoreApi } from "zustand/vanilla";
 
-type TCustomStore = {
-  slice: Parameters<typeof useStore>[0];
+type TCustomStore<TSlice> = {
+  slice: TSlice;
   destroy: () => void;
   actions: Record<string, unknown>;
 };
 
-type TProps = {
-  customStore: TCustomStore;
-  selector: Parameters<typeof useStore>[1];
+type TProps<TSlice, TSelectedState> = {
+  customStore: TCustomStore<TSlice>;
+  selector: (state: ExtractState<TSlice>) => TSelectedState;
 };
 
-const useBaseStore = ({ customStore, selector }: TProps) => {
-  const { slice, destroy, actions } = customStore;
+const useBaseStore = <
+  TSlice extends StoreApi<unknown>,
+  TSelectedState = ExtractState<TSlice>
+>({
+  customStore,
+  selector,
+}: TProps<TSlice, TSelectedState>): [
+  TSelectedState,
+  Record<string, unknown>
+] => {
+  const { slice, actions, destroy } = customStore;
 
-  const store = useStore(slice, selector);
+  const store = useStore<TSlice, TSelectedState>(slice, selector);
 
   useEffect(() => {
     return () => {

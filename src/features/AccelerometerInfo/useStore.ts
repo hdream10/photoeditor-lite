@@ -2,13 +2,18 @@ import { useMemo } from "react";
 import { coreApi } from "./api";
 import { createStore } from "./store";
 import { useBaseStore } from "@/shared/store-kit";
+import { ExtractState } from "zustand/vanilla";
 
-const useStore = (selector: Parameters<typeof useBaseStore>[0]["selector"]) => {
+type TSlice = ReturnType<typeof createStore>["slice"];
+
+const useStore = <TSelected = ExtractState<TSlice>>(
+  selector: (state: ExtractState<TSlice>) => TSelected
+) => {
   const store = useMemo(() => {
     return createStore({ coreApi });
   }, []);
 
-  return useBaseStore({ customStore: store, selector });
+  return useBaseStore<TSlice, TSelected>({ customStore: store, selector });
 };
 
 export default useStore;

@@ -1,10 +1,7 @@
-import useStore from "./useStore";
 import { View } from "./ui";
 
 const Main = () => {
-  const { state } = useStore();
-
-  return <View {...state} />;
+  return <View />;
 };
 
 export default Main;

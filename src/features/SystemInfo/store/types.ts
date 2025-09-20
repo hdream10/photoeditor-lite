@@ -9,3 +9,7 @@ export type TCoreApi = {
   getOsName: () => string | undefined;
   getOsVersion: () => string | undefined;
 };
+
+export type TDependencies = {
+  coreApi: TCoreApi;
+};

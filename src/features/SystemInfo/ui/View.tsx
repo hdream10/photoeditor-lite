@@ -1,13 +1,10 @@
 import { View as ReactNativeView } from "react-native";
 import { Text } from "@/shared/ui";
+import useStore from "../useStore";
 
-type TProps = {
-  modelName: string | undefined;
-  osName: string | undefined;
-  osVersion: string | undefined;
-};
+const View = () => {
+  const { modelName, osName, osVersion } = useStore();
 
-const View: React.FC<TProps> = ({ modelName, osName, osVersion }) => {
   return (
     <ReactNativeView>
       <Text variant="title">Информация о системе</Text>
