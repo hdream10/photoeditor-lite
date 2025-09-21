@@ -13,17 +13,16 @@ export type TObserver<TDependencies, TState> = (
   state: ReturnType<TBaseSlice<TState>["getState"]>
 ) => TDisposer;
 
-export type TAction<TProps> = (props: TProps) => void;
+export type TAction<TProps = unknown> = (props: TProps) => void;
 
-export type TActions<TState> = Record<string, TAction<TState>>;
+export type TActions = Record<string, TAction>;
 
-export type TWrappedAction<
-  TState,
-  TDependencies = TBaseDependencies,
-  TProps = unknown
-> = (
+export type TWrappedAction<TDependencies, TState, TProps = unknown> = (
   dependencies: TDependencies,
   state: ReturnType<TBaseSlice<TState>["getState"]>
 ) => TAction<TProps>;
 
-export type TWrappedActions<TState> = Record<string, TWrappedAction<TState>>;
+export type TWrappedActions<TDependencies, TState> = Record<
+  string,
+  TWrappedAction<TDependencies, TState, unknown>
+>;

@@ -1,5 +1,5 @@
 import { Text } from "@/shared/ui";
-import { DisplayCamera } from "./components";
+import { DisplayCamera, DisplayPhoto } from "./components";
 import useStore from "../useStore";
 
 const View = () => {
@@ -13,6 +13,10 @@ const View = () => {
   }
   if (state.isPermissionFailed) {
     return <Text>Permission failed</Text>;
+  }
+
+  if (state.photoSrc) {
+    return <DisplayPhoto photoSrc={state.photoSrc} />;
   }
 
   return <DisplayCamera />;

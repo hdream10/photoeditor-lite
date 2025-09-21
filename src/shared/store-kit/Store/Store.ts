@@ -14,7 +14,7 @@ class Store<
 > {
   private readonly slice: TSlice;
 
-  private readonly actions: TActions<TState> = {};
+  private readonly actions: TActions = {};
 
   private disposers: TDisposer[] = [];
 
@@ -27,7 +27,7 @@ class Store<
     }: {
       dependencies: TDependencies;
       observers?: TObserver<TDependencies, TState>[];
-      actions?: TWrappedActions<TState>;
+      actions?: TWrappedActions<TDependencies, TState>;
     }
   ) {
     this.slice = slice;
@@ -45,7 +45,7 @@ class Store<
   }
 
   private initActions(
-    actions: TWrappedActions<TState>,
+    actions: TWrappedActions<TDependencies, TState>,
     dependencies: TDependencies
   ) {
     Object.entries(actions).forEach(([key, action]) => {
