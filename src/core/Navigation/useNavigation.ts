@@ -1,8 +1,8 @@
-import { useNavigation as useReactNativeNavigation } from "@react-navigation/native";
+import { useNavigation as useNavigationRN } from "@react-navigation/native";
 import { TDrawerNavigationProp } from "./types";
 
 const useNavigation = () => {
-  return useReactNativeNavigation<TDrawerNavigationProp>();
+  return useNavigationRN<TDrawerNavigationProp>();
 };
 
 export default useNavigation;

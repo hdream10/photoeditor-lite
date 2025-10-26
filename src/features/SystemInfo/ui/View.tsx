@@ -1,31 +1,21 @@
-import { View as ReactNativeView } from "react-native";
+import { View as ViewRN } from "react-native";
 import { Text } from "@/shared/ui";
 import useStore from "../useStore";
+import { InfoItem } from "./components";
 
 const View = () => {
   const { modelName, osName, osVersion } = useStore();
 
   return (
-    <ReactNativeView>
+    <ViewRN>
       <Text variant="title">Информация о системе</Text>
 
-      <ReactNativeView>
-        <ReactNativeView>
-          <Text variant="body">Устройство:</Text>
-          <Text variant="body">{modelName ?? "Неизвестно"}</Text>
-        </ReactNativeView>
-
-        <ReactNativeView>
-          <Text variant="body">ОС:</Text>
-          <Text variant="body">{osName ?? "Неизвестно"}</Text>
-        </ReactNativeView>
-
-        <ReactNativeView>
-          <Text variant="body">Версия ОС:</Text>
-          <Text variant="body">{osVersion ?? "Неизвестно"}</Text>
-        </ReactNativeView>
-      </ReactNativeView>
-    </ReactNativeView>
+      <ViewRN>
+        <InfoItem label="Устройство" value={modelName} />
+        <InfoItem label="ОС" value={osName} />
+        <InfoItem label="Версия ОС" value={osVersion} />
+      </ViewRN>
+    </ViewRN>
   );
 };
 
