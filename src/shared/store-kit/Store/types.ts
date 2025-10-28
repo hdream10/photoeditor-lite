@@ -1,6 +1,6 @@
 import { StoreApi } from "zustand/vanilla";
 
-export type TBaseSlice<TState> = StoreApi<TState>;
+export type TBaseModel<TState> = StoreApi<TState>;
 
 export type TBaseDependencies =
   | Partial<Record<"serverApi" | "coreApi", unknown>>
@@ -10,19 +10,19 @@ export type TDisposer = () => void;
 
 export type TObserver<TDependencies, TState> = (
   dependencies: TDependencies,
-  state: ReturnType<TBaseSlice<TState>["getState"]>
+  state: TState
 ) => TDisposer;
 
-export type TAction<TProps = unknown> = (props: TProps) => void;
+export type TAction<TProps> = (props: TProps) => void;
 
-export type TActions = Record<string, TAction>;
+export type TActions<TProps> = Record<string, TAction<TProps>>;
 
-export type TWrappedAction<TDependencies, TState, TProps = unknown> = (
+export type TWrappedAction<TDependencies, TState, TProps> = (
   dependencies: TDependencies,
-  state: ReturnType<TBaseSlice<TState>["getState"]>
+  state: TState
 ) => TAction<TProps>;
 
-export type TWrappedActions<TDependencies, TState> = Record<
+export type TWrappedActions<TDependencies, TState, TProps> = Record<
   string,
-  TWrappedAction<TDependencies, TState, unknown>
+  TWrappedAction<TDependencies, TState, TProps>
 >;

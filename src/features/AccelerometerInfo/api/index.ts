@@ -1,1 +1,1 @@
-export { default as coreApi } from "./instanceCoreApi";
+export { coreApi } from "./api";

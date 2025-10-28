@@ -1,7 +1,7 @@
 import type { TDependencies } from "../types";
-import type { TPosition, TState } from "../@Slice";
+import type { TPosition, TState } from "../@Model";
 
-const autoSyncPosition = ({ coreApi }: TDependencies, state: TState) => {
+const syncPosition = ({ coreApi }: TDependencies, state: TState) => {
   const handleChangePosition = (position: TPosition) => {
     state.setPosition(position);
   };
@@ -9,4 +9,4 @@ const autoSyncPosition = ({ coreApi }: TDependencies, state: TState) => {
   return coreApi.onChangePosition(handleChangePosition);
 };
 
-export default autoSyncPosition;
+export default syncPosition;

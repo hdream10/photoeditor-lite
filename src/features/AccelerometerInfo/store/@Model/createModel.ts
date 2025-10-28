@@ -1,7 +1,7 @@
 import { createStore } from "zustand/vanilla";
 import type { TState } from "./types";
 
-const createSlice = () => {
+const createModel = () => {
   return createStore<TState>((set) => ({
     position: undefined,
 
@@ -9,4 +9,6 @@ const createSlice = () => {
   }));
 };
 
-export default createSlice;
+export type TModel = ReturnType<typeof createModel>;
+
+export default createModel;

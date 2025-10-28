@@ -1,2 +1,0 @@
-export { default as createSlice } from "./createSlice";
-export type { TPosition, TState } from "./types";

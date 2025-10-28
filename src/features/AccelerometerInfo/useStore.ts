@@ -1,16 +1,14 @@
-import { coreApi } from "./api";
-import { createStore } from "./store";
-import { useBaseStore } from "@/shared/store-kit";
+import { useStore as useZustandStore } from "zustand/react";
 import { ExtractState } from "zustand/vanilla";
+import { store } from "./store";
+import type { TModel } from "./store";
 
-type TSlice = ReturnType<typeof createStore>["slice"];
+const { model } = store;
 
-const store = createStore({ coreApi });
-
-const useStore = <TSelected = ExtractState<TSlice>>(
-  selector: (state: ExtractState<TSlice>) => TSelected
+const useStore = <TSelected = ExtractState<TModel>>(
+  selector: (state: ExtractState<TModel>) => TSelected
 ) => {
-  return useBaseStore<TSlice, TSelected>({ customStore: store, selector });
+  return useZustandStore<TModel, TSelected>(model, selector);
 };
 
 export default useStore;
