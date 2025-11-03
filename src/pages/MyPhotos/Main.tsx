@@ -1,11 +1,7 @@
-import { View, Text } from "react-native";
+import { PhotoHistory } from "@/features/PhotoHistory";
 
 const Main = () => {
-  return (
-    <View>
-      <Text>Мои фото</Text>
-    </View>
-  );
+  return <PhotoHistory />;
 };
 
 export default Main;

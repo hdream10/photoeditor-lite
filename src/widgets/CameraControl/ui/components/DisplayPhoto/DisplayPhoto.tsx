@@ -17,6 +17,7 @@ const DisplayPhoto: React.FC<TProps> = ({
 }) => {
   const handleSave = () => {
     onSave({ uri: photoSrc });
+    onBack();
   };
 
   return (
