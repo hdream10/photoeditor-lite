@@ -1,12 +1,18 @@
 import { Text } from "@/shared/ui";
 import { DisplayCamera, DisplayPhoto } from "./components";
-import { useCameraPermissions, useCameraPhoto } from "../hooks";
+import {
+  useCameraPermissions,
+  useCameraPhoto,
+  usePhotoEditMode,
+} from "../hooks";
+import { DrawingEditor } from "@/features/DrawingEditor";
 
 const View = () => {
-  const { isNotReady, isDenied, isUndetermined } =
-    useCameraPermissions();
+  const { isNotReady, isDenied, isUndetermined } = useCameraPermissions();
 
   const camera = useCameraPhoto();
+  const { isEditing, handleEdit, handleBackFromEdit, handleBackFromPhoto } =
+    usePhotoEditMode(camera.reset);
 
   if (isNotReady) {
     return <Text>Permission is not ready</Text>;
@@ -20,11 +26,23 @@ const View = () => {
     return <Text>Permission undetermined</Text>;
   }
 
-  if (camera.photoSrc) {
-    return <DisplayPhoto photoSrc={camera.photoSrc} />;
+  if (!camera.photoSrc) {
+    return <DisplayCamera camera={camera} />;
   }
 
-  return <DisplayCamera camera={camera} />;
+  if (isEditing) {
+    return (
+      <DrawingEditor photoSrc={camera.photoSrc} onBack={handleBackFromEdit} />
+    );
+  }
+
+  return (
+    <DisplayPhoto
+      photoSrc={camera.photoSrc}
+      onEdit={handleEdit}
+      onBack={handleBackFromPhoto}
+    />
+  );
 };
 
 export default View;

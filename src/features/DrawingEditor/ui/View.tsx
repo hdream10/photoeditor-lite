@@ -4,9 +4,10 @@ import { useDrawing } from "../hooks";
 
 type TProps = {
   photoSrc: string;
+  onBack?: () => void;
 };
 
-const View: React.FC<TProps> = ({ photoSrc }) => {
+const View: React.FC<TProps> = ({ photoSrc, onBack }) => {
   const {
     paths,
     currentPath,
@@ -30,6 +31,7 @@ const View: React.FC<TProps> = ({ photoSrc }) => {
       <DrawingToolbar
         onUndo={undo}
         onClear={clearDrawing}
+        onBack={onBack}
         canUndo={paths.length > 0}
       />
     </ViewRN>
