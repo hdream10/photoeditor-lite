@@ -3,6 +3,7 @@ import Observers from "./Observers";
 import type {
   TBaseModel,
   TBaseDependencies,
+  TBaseState,
   TObserver,
   TWrappedAction,
 } from "./types";
@@ -31,7 +32,7 @@ class Store<
       observers = [],
     }: {
       actions: TActionFactories;
-      observers?: TObserver<TObserverDependencies, TState>[];
+      observers?: TObserver<TObserverDependencies, TBaseState<TModel>>[];
     }
   ) {
     this._model = model;

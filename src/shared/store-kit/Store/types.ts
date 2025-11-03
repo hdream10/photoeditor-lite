@@ -14,7 +14,7 @@ export type TDisposer = () => void;
 
 export type TObserver<TDependencies, TState> = (
   dependencies: TDependencies,
-  state: TState | undefined
+  state: TState
 ) => TDisposer;
 
 export type TContext<
