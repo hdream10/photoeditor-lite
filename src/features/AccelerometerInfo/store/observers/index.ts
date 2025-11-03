@@ -1,1 +1,1 @@
-export { default as autoSyncPosition } from "./autoSyncPosition";
+export { default as syncPosition } from "./syncPosition";

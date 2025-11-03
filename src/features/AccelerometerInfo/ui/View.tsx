@@ -1,35 +1,25 @@
-import { View as ReactNativeView } from "react-native";
+import { View as ViewRN } from "react-native";
 import { Text } from "@/shared/ui";
 import useStore from "../useStore";
+import { InfoItem } from "./components";
 
 const View = () => {
-  const [position] = useStore((state) => state.position);
+  const position = useStore((state) => state.position);
 
   if (!position) {
     return undefined;
   }
 
   return (
-    <ReactNativeView>
+    <ViewRN>
       <Text variant="title">Информация о акселерометре</Text>
 
-      <ReactNativeView>
-        <ReactNativeView>
-          <Text variant="body">Положение x:</Text>
-          <Text variant="body">{position.x}</Text>
-        </ReactNativeView>
-
-        <ReactNativeView>
-          <Text variant="body">Положение y:</Text>
-          <Text variant="body">{position.y}</Text>
-        </ReactNativeView>
-
-        <ReactNativeView>
-          <Text variant="body">Положение z:</Text>
-          <Text variant="body">{position.z}</Text>
-        </ReactNativeView>
-      </ReactNativeView>
-    </ReactNativeView>
+      <ViewRN>
+        <InfoItem label="Положение x" value={position.x} />
+        <InfoItem label="Положение y" value={position.y} />
+        <InfoItem label="Положение z" value={position.z} />
+      </ViewRN>
+    </ViewRN>
   );
 };
 

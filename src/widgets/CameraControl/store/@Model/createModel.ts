@@ -4,7 +4,7 @@ import cameraMachine, { EState, EEvents } from "./stateMachine";
 import type { TState } from "./types";
 import { BACK_FACING, FRONT_FACING } from "./constants";
 
-const createSlice = () => {
+const createModel = () => {
   return createStore<TState>((set) => {
     const actor = createActor(cameraMachine);
 
@@ -72,4 +72,4 @@ const createSlice = () => {
   });
 };
 
-export default createSlice;
+export default createModel;

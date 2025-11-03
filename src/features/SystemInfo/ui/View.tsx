@@ -1,10 +1,12 @@
 import { View as ViewRN } from "react-native";
 import { Text } from "@/shared/ui";
-import useStore from "../useStore";
 import { InfoItem } from "./components";
+import useActions from "../useActions";
 
 const View = () => {
-  const { modelName, osName, osVersion } = useStore();
+  const { getSystemInfo } = useActions();
+
+  const { modelName, osName, osVersion } = getSystemInfo();
 
   return (
     <ViewRN>

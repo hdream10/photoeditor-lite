@@ -1,72 +1,56 @@
+import Actions from "./Actions";
+import Observers from "./Observers";
 import type {
-  TBaseSlice,
+  TBaseModel,
   TBaseDependencies,
-  TDisposer,
+  TBaseState,
   TObserver,
-  TWrappedActions,
-  TActions,
+  TWrappedAction,
 } from "./types";
 
 class Store<
   TState = unknown,
-  TSlice extends TBaseSlice<TState> = TBaseSlice<TState>,
-  TDependencies extends TBaseDependencies = TBaseDependencies
+  TModel extends TBaseModel<TState> | undefined =
+    | TBaseModel<TState>
+    | undefined,
+  TActionFactories extends Record<string, TWrappedAction<TModel, any>> = Record<
+    string,
+    TWrappedAction<TModel, any>
+  >,
+  TObserverDependencies extends TBaseDependencies = TBaseDependencies
 > {
-  private readonly slice: TSlice;
+  private readonly _model: TModel;
 
-  private readonly actions: TActions = {};
+  private readonly _actions: Actions<TState, TModel, TActionFactories>;
 
-  private disposers: TDisposer[] = [];
+  private readonly _observers: Observers<TState, TModel, TObserverDependencies>;
 
   public constructor(
-    slice: TSlice,
+    model: TModel,
     {
-      dependencies,
+      actions,
       observers = [],
-      actions = {},
     }: {
-      dependencies: TDependencies;
-      observers?: TObserver<TDependencies, TState>[];
-      actions?: TWrappedActions<TDependencies, TState>;
+      actions: TActionFactories;
+      observers?: TObserver<TObserverDependencies, TBaseState<TModel>>[];
     }
   ) {
-    this.slice = slice;
+    this._model = model;
 
-    this.initActions(actions, dependencies);
-    this.initObservers(observers, dependencies);
+    this._observers = new Observers(model, { observers });
+    this._actions = new Actions(model, { actions });
   }
 
-  public get() {
-    return {
-      slice: this.slice,
-      actions: this.actions,
-      destroy: this.destroy,
-    };
+  public get model() {
+    return this._model;
   }
 
-  private initActions(
-    actions: TWrappedActions<TDependencies, TState>,
-    dependencies: TDependencies
-  ) {
-    Object.entries(actions).forEach(([key, action]) => {
-      this.actions[key] = action(dependencies, this.slice.getState());
-    });
+  public get observers() {
+    return this._observers;
   }
 
-  private initObservers(
-    observers: TObserver<TDependencies, TState>[],
-    dependencies: TDependencies
-  ) {
-    observers.forEach((observer) => {
-      this.disposers.push(observer(dependencies, this.slice.getState()));
-    });
-  }
-
-  private destroy() {
-    this.disposers.forEach((disposer) => {
-      disposer();
-    });
-    this.disposers = [];
+  public get actions() {
+    return this._actions;
   }
 }
 

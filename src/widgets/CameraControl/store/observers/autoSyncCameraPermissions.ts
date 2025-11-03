@@ -1,4 +1,4 @@
-import type { TState } from "../@Slice";
+import type { TState } from "../@Model";
 import type { TDependencies } from "../types";
 
 const autoSyncCameraPermissions = (

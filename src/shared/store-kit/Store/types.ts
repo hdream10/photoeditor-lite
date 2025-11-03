@@ -1,28 +1,47 @@
 import { StoreApi } from "zustand/vanilla";
 
-export type TBaseSlice<TState> = StoreApi<TState>;
+export type TBaseModel<TState = unknown> = StoreApi<TState>;
 
-export type TBaseDependencies =
-  | Partial<Record<"serverApi" | "coreApi", unknown>>
-  | undefined;
+export type TBaseDependencies = Partial<
+  Record<"serverApi" | "coreApi", unknown>
+>;
+
+export type TBaseState<TModel> = TModel extends TBaseModel<infer TState>
+  ? TState
+  : undefined;
 
 export type TDisposer = () => void;
 
 export type TObserver<TDependencies, TState> = (
   dependencies: TDependencies,
-  state: ReturnType<TBaseSlice<TState>["getState"]>
+  state: TState
 ) => TDisposer;
 
-export type TAction<TProps = unknown> = (props: TProps) => void;
+export type TContext<
+  TModel extends TBaseModel | undefined,
+  TDependencies extends TBaseDependencies
+> = {
+  dependencies: TDependencies;
+  state: TBaseState<TModel>;
+};
 
-export type TActions = Record<string, TAction>;
+export type TWrappedAction<
+  TModel extends TBaseModel | undefined,
+  TDependencies extends TBaseDependencies,
+  TProps = any,
+  TResult = void
+> = (context: TContext<TModel, TDependencies>, props: TProps) => TResult;
 
-export type TWrappedAction<TDependencies, TState, TProps = unknown> = (
-  dependencies: TDependencies,
-  state: ReturnType<TBaseSlice<TState>["getState"]>
-) => TAction<TProps>;
-
-export type TWrappedActions<TDependencies, TState> = Record<
-  string,
-  TWrappedAction<TDependencies, TState, unknown>
->;
+export type InferDependencies<
+  TActionFactories extends Record<
+    string,
+    TWrappedAction<TBaseModel | undefined, TBaseDependencies, unknown, unknown>
+  >
+> = TActionFactories[keyof TActionFactories] extends TWrappedAction<
+  TBaseModel | undefined,
+  infer D
+>
+  ? D extends TBaseDependencies
+    ? D
+    : TBaseDependencies
+  : TBaseDependencies;

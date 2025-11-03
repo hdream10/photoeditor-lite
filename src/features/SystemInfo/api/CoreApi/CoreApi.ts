@@ -1,7 +1,7 @@
 import * as Device from "expo-device";
-import { TCoreApi } from "../../store";
+import type { ICoreApi } from "../../store";
 
-class CoreApi implements TCoreApi {
+class CoreApi implements ICoreApi {
   private readonly device = Device;
 
   public getModelName() {

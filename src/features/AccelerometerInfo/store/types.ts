@@ -1,10 +1,10 @@
 import type { TDisposer } from "@/shared/types";
-import type { TPosition } from "./@Slice";
+import type { TPosition } from "./@Model";
 
-export type TCoreApi = {
+export interface ICoreApi {
   onChangePosition: (callback: (position: TPosition) => void) => TDisposer;
-};
+}
 
 export type TDependencies = {
-  coreApi: TCoreApi;
+  coreApi: ICoreApi;
 };

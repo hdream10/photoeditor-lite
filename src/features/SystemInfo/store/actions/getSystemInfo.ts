@@ -1,14 +1,10 @@
-import type { TCoreApi } from "../types";
+import type { TDependencies } from "../types";
 
-type TProps = {
-  coreApi: TCoreApi;
-};
-
-const getSystemInfo = ({ coreApi }: TProps) => {
+const getSystemInfo = ({ dependencies }: { dependencies: TDependencies }) => {
   return {
-    modelName: coreApi.getModelName(),
-    osName: coreApi.getOsName(),
-    osVersion: coreApi.getOsVersion(),
+    modelName: dependencies.coreApi.getModelName(),
+    osName: dependencies.coreApi.getOsName(),
+    osVersion: dependencies.coreApi.getOsVersion(),
   };
 };
 

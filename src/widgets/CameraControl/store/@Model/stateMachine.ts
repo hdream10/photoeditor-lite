@@ -82,7 +82,7 @@ const stateMachine = createMachine({
         },
       },
     },
-    [EState.TAKING_PHOTO_SUCCESS]: {},
+    [EState.TAKING_PHOTO_SUCCESS]: {target: 'final'},
     [EState.TAKING_PHOTO_FAILED]: {
       on: {
         [EEvents.START_TAKE_PHOTO]: {
