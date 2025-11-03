@@ -4,12 +4,16 @@ export type TSystemInfo = {
   osVersion: string | undefined;
 };
 
-export type TCoreApi = {
+export interface ICoreApi {
   getModelName: () => string | undefined;
   getOsName: () => string | undefined;
   getOsVersion: () => string | undefined;
-};
+}
 
 export type TDependencies = {
-  coreApi: TCoreApi;
+  coreApi: ICoreApi;
+};
+
+export type TContext = {
+  dependencies: TDependencies;
 };

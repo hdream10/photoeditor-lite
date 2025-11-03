@@ -4,29 +4,34 @@ import type {
   TBaseModel,
   TBaseDependencies,
   TObserver,
-  TWrappedActions,
+  TWrappedAction,
 } from "./types";
 
 class Store<
   TState = unknown,
-  TProps = unknown,
-  TModel extends TBaseModel<TState> = TBaseModel<TState>,
-  TDependencies extends TBaseDependencies = TBaseDependencies
+  TModel extends TBaseModel<TState> | undefined =
+    | TBaseModel<TState>
+    | undefined,
+  TActionFactories extends Record<string, TWrappedAction<TModel, any>> = Record<
+    string,
+    TWrappedAction<TModel, any>
+  >,
+  TObserverDependencies extends TBaseDependencies = TBaseDependencies
 > {
   private readonly _model: TModel;
 
-  private readonly _actions: Actions<TState, TProps, TModel, TDependencies>;
+  private readonly _actions: Actions<TState, TModel, TActionFactories>;
 
-  private readonly _observers: Observers<TState, TModel, TDependencies>;
+  private readonly _observers: Observers<TState, TModel, TObserverDependencies>;
 
   public constructor(
     model: TModel,
     {
+      actions,
       observers = [],
-      actions = {},
     }: {
-      observers?: TObserver<TDependencies, TState>[];
-      actions?: TWrappedActions<TDependencies, TState, TProps>;
+      actions: TActionFactories;
+      observers?: TObserver<TObserverDependencies, TState>[];
     }
   ) {
     this._model = model;
@@ -44,7 +49,7 @@ class Store<
   }
 
   public get actions() {
-    return this._actions.api;
+    return this._actions;
   }
 }
 

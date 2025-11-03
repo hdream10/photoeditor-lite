@@ -1,32 +1,43 @@
 import type {
   TBaseModel,
   TBaseDependencies,
-  TActions,
-  TWrappedActions,
+  TWrappedAction,
+  InferDependencies,
 } from "./types";
 
 class Actions<
   TState = unknown,
-  TProps = unknown,
-  TModel extends TBaseModel<TState> = TBaseModel<TState>,
-  TDependencies extends TBaseDependencies = TBaseDependencies
+  TModel extends TBaseModel<TState> | undefined =
+    | TBaseModel<TState>
+    | undefined,
+  TActionFactories extends Record<
+    string,
+    TWrappedAction<TModel, TBaseDependencies>
+  > = Record<string, TWrappedAction<TModel, TBaseDependencies>>,
+  TDependencies extends TBaseDependencies = InferDependencies<TActionFactories>,
+  TActions extends Record<
+    string,
+    (
+      props?: Parameters<TActionFactories[keyof TActionFactories]>[1]
+    ) => ReturnType<TActionFactories[keyof TActionFactories]>
+  > = {
+    [K in keyof TActionFactories]: (
+      props?: Parameters<TActionFactories[K]>[1]
+    ) => ReturnType<TActionFactories[K]>;
+  }
 > {
   private readonly model: TModel;
 
-  private readonly wrappedActions: TWrappedActions<
-    TDependencies,
-    TState,
-    TProps
-  >;
+  private readonly wrappedActions: TActionFactories;
 
-  private readonly actions: TActions<TProps> = {};
+  private actions: TActions = {} as TActions;
 
   public constructor(
     model: TModel,
     {
       actions,
     }: {
-      actions: TWrappedActions<TDependencies, TState, TProps>;
+      actions: TActionFactories;
     }
   ) {
     this.model = model;
@@ -34,12 +45,28 @@ class Actions<
   }
 
   public init(dependencies: TDependencies) {
-    Object.entries(this.wrappedActions).forEach(([key, wrappedAction]) => {
-      this.actions[key] = wrappedAction(dependencies, this.model.getState());
-    });
+    const preparedActions = {} as TActions;
+
+    for (const key in this.wrappedActions) {
+      const wrappedAction = this.wrappedActions[key];
+      const action = (props: Parameters<typeof wrappedAction>[1]) => {
+        return wrappedAction(
+          {
+            dependencies,
+            state: this.model?.getState(),
+          } as Parameters<typeof wrappedAction>[0],
+          props
+        );
+      };
+
+      preparedActions[key as keyof TActions] =
+        action as TActions[keyof TActions];
+    }
+
+    this.actions = preparedActions;
   }
 
-  public get api() {
+  public get(): TActions {
     return this.actions;
   }
 }

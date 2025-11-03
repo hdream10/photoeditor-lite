@@ -6,9 +6,9 @@ import type {
 } from "./types";
 
 class Observers<
-  TState = unknown,
-  TModel extends TBaseModel<TState> = TBaseModel<TState>,
-  TDependencies extends TBaseDependencies = TBaseDependencies
+  TState,
+  TModel extends TBaseModel<TState> | undefined,
+  TDependencies extends TBaseDependencies
 > {
   private readonly observers: TObserver<TDependencies, TState>[];
 
@@ -30,7 +30,7 @@ class Observers<
 
   public run(dependencies: TDependencies) {
     this.observers.forEach((observer) => {
-      this.disposers.push(observer(dependencies, this.model.getState()));
+      this.disposers.push(observer(dependencies, this.model?.getState()));
     });
   }
 
