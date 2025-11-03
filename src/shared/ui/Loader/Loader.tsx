@@ -1,5 +1,5 @@
 import { View as ViewRN, ActivityIndicator } from "react-native";
-import { Text } from "@/shared/ui";
+import { Text } from "../Text";
 import { customColors } from "@/shared/theme";
 import { styles } from "./Loader.styles";
 

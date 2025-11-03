@@ -13,13 +13,12 @@ const usePhotoEditMode = (onResetPhoto: () => void) => {
 
   const handleBackFromPhoto = useCallback(() => {
     onResetPhoto();
-    setIsEditing(false);
+    handleBackFromEdit();
   }, [onResetPhoto]);
 
   return {
     isEditing,
     handleEdit,
-    handleBackFromEdit,
     handleBackFromPhoto,
   };
 };

@@ -18,20 +18,20 @@ export const styles = StyleSheet.create({
     left: 0,
     right: 0,
     flexDirection: "row",
-    justifyContent: "center",
-    gap: 16,
+    justifyContent: "space-between",
+    alignItems: "center",
     paddingHorizontal: 20,
   },
-  button: {
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 8,
-    minWidth: 140,
+  backButton: {
+    position: "absolute",
+    left: 20,
   },
-  buttonText: {
-    color: customColors.text,
-    fontSize: 16,
-    fontWeight: "600",
+  centerGroup: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+    gap: 16,
   },
 });
 

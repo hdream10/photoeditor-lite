@@ -24,6 +24,11 @@ const View: React.FC<TProps> = ({ photoSrc, onBack, onSave }) => {
 
   const { save } = useDrawingSave(canvasRef, onSave);
 
+  const handleSave = () => {
+    save();
+    onBack();
+  };
+
   return (
     <DrawingContainer>
       <DrawingCanvas
@@ -37,7 +42,7 @@ const View: React.FC<TProps> = ({ photoSrc, onBack, onSave }) => {
       />
       <DrawingToolbar
         onUndo={undo}
-        onSave={save}
+        onSave={handleSave}
         onClear={clearDrawing}
         onBack={onBack}
         canUndo={paths.length > 0}

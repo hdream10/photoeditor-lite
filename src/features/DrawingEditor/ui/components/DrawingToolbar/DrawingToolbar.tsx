@@ -1,5 +1,5 @@
-import { View as ViewRN, Text } from "react-native";
-import { Button } from "@/shared/ui";
+import { View as ViewRN } from "react-native";
+import { IconButton } from "@/shared/ui";
 import { styles } from "./DrawingToolbar.styles";
 
 type TProps = {
@@ -19,26 +19,42 @@ const DrawingToolbar: React.FC<TProps> = ({
 }) => {
   return (
     <ViewRN style={styles.container}>
-      <Button onPress={onBack} variant="secondary" style={styles.button}>
-        <Text style={styles.buttonText}>← Назад</Text>
-      </Button>
+      <IconButton
+        icon="arrow-left"
+        onPress={onBack}
+        variant="secondary"
+        buttonSize="medium"
+        iconSize={24}
+        style={styles.leftButton}
+      />
 
-      <Button
+      <ViewRN style={styles.centerGroup}>
+        <IconButton
+          icon="content-save"
+          onPress={onSave}
+          variant="secondary"
+          buttonSize="large"
+          iconSize={32}
+        />
+
+        <IconButton
+          icon="delete"
+          onPress={onClear}
+          variant="secondary"
+          buttonSize="large"
+          iconSize={32}
+        />
+      </ViewRN>
+
+      <IconButton
+        icon="undo"
         onPress={onUndo}
         variant="secondary"
-        style={styles.button}
+        buttonSize="medium"
+        iconSize={24}
         disabled={!canUndo}
-      >
-        <Text style={styles.buttonText}>↶ Отменить</Text>
-      </Button>
-
-      <Button onPress={onSave} variant="primary" style={styles.button}>
-        <Text style={styles.buttonText}>💾 Сохранить</Text>
-      </Button>
-
-      <Button onPress={onClear} variant="secondary" style={styles.button}>
-        <Text style={styles.buttonText}>🗑️ Очистить</Text>
-      </Button>
+        style={styles.rightButton}
+      />
     </ViewRN>
   );
 };

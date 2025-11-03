@@ -13,8 +13,9 @@ import { ErrorMessage } from "./components";
 const View = () => {
   const { isDenied, isUndetermined } = usePermissions();
   const camera = useCameraPhoto();
-  const { isEditing, handleEdit, handleBackFromEdit, handleBackFromPhoto } =
-    usePhotoEditMode(camera.reset);
+  const { isEditing, handleEdit, handleBackFromPhoto } = usePhotoEditMode(
+    camera.reset
+  );
   const { isSaving, savePhoto } = usePhotoSave();
 
   if (isDenied) {
@@ -37,7 +38,7 @@ const View = () => {
     return (
       <DrawingEditor
         photoSrc={camera.photoSrc}
-        onBack={handleBackFromEdit}
+        onBack={handleBackFromPhoto}
         onSave={savePhoto}
       />
     );

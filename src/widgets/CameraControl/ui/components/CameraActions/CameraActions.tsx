@@ -1,5 +1,5 @@
-import { View as ViewRN, Text } from "react-native";
-import { Button } from "@/shared/ui";
+import { View as ViewRN } from "react-native";
+import { IconButton } from "@/shared/ui";
 import { styles } from "./CameraActions.styles";
 
 type TProps = {
@@ -15,26 +15,25 @@ const CameraActions: React.FC<TProps> = ({
 }) => {
   return (
     <ViewRN style={styles.container}>
-      <Button
+      <IconButton
+        icon="camera"
         onPress={onTakePhoto}
-        style={styles.photoButton}
-        disabled={disabled}
         variant="primary"
-      >
-        <Text style={styles.icon}>📷</Text>
-      </Button>
-
-      <Button
-        onPress={onToggleFacing}
-        style={styles.flipButton}
+        buttonSize="large"
+        iconSize={32}
         disabled={disabled}
+      />
+
+      <IconButton
+        icon="camera-flip"
+        onPress={onToggleFacing}
         variant="secondary"
-      >
-        <Text style={styles.icon}>🔄</Text>
-      </Button>
+        buttonSize="large"
+        iconSize={32}
+        disabled={disabled}
+      />
     </ViewRN>
   );
 };
 
 export default CameraActions;
-

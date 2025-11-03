@@ -5,5 +5,6 @@ export { Section } from "./Section";
 export { Spacer } from "./Spacer";
 export { Text } from "./Text";
 export { Button } from "./Button";
+export { IconButton } from "./IconButton";
 export { Image } from "./Image";
 export { Loader } from "./Loader";

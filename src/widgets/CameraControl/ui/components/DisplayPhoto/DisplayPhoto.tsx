@@ -1,5 +1,5 @@
-import { View as ViewRN, Text } from "react-native";
-import { Image, Button } from "@/shared/ui";
+import { View as ViewRN } from "react-native";
+import { Image, IconButton } from "@/shared/ui";
 import { styles } from "./DisplayPhoto.styles";
 
 type TProps = {
@@ -27,15 +27,30 @@ const DisplayPhoto: React.FC<TProps> = ({
         style={styles.image}
       />
       <ViewRN style={styles.actions}>
-        <Button onPress={handleSave} variant="primary" style={styles.button}>
-          <Text style={styles.buttonText}>💾 Сохранить</Text>
-        </Button>
-        <Button onPress={onEdit} variant="primary" style={styles.button}>
-          <Text style={styles.buttonText}>✏️ Редактировать</Text>
-        </Button>
-        <Button onPress={onBack} variant="secondary" style={styles.button}>
-          <Text style={styles.buttonText}>← Назад</Text>
-        </Button>
+        <IconButton
+          icon="arrow-left"
+          onPress={onBack}
+          variant="secondary"
+          buttonSize="medium"
+          iconSize={24}
+          style={styles.backButton}
+        />
+        <ViewRN style={styles.centerGroup}>
+          <IconButton
+            icon="content-save"
+            onPress={handleSave}
+            variant="primary"
+            buttonSize="large"
+            iconSize={32}
+          />
+          <IconButton
+            icon="pencil"
+            onPress={onEdit}
+            variant="primary"
+            buttonSize="large"
+            iconSize={32}
+          />
+        </ViewRN>
       </ViewRN>
     </ViewRN>
   );

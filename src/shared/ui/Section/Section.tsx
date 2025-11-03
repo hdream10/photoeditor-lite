@@ -1,5 +1,5 @@
 import { View as ViewRN } from "react-native";
-import { Text } from "@/shared/ui";
+import { Text } from "../Text";
 import { styles } from "./Section.styles";
 
 type TProps = {
