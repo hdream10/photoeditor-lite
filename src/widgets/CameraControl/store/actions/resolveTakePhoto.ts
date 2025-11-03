@@ -1,4 +1,4 @@
-import { TState } from "../@Slice";
+import { TState } from "../@Model";
 import { TDependencies, TPhoto } from "../types";
 
 type TProps = {

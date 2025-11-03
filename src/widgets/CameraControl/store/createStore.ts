@@ -1,5 +1,5 @@
 import { Store } from "@/shared/store-kit";
-import { createSlice } from "./@Slice";
+import { createSlice } from "./@Model";
 import { autoSyncCameraPermissions } from "./observers";
 import { resolveTakePhoto } from "./actions";
 import type { TDependencies } from "./types";
