@@ -1,4 +1,3 @@
-import { View as ViewRN } from "react-native";
 import { Loader } from "@/shared/ui";
 import { DisplayCamera, DisplayPhoto } from "./components";
 import {
