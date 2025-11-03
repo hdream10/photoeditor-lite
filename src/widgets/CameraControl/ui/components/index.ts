@@ -1,2 +1,2 @@
-export { default as DisplayCamera } from "./DisplayCamera";
-export { default as DisplayPhoto } from "./DisplayPhoto";
+export { DisplayCamera } from "./DisplayCamera";
+export { DisplayPhoto } from "./DisplayPhoto";

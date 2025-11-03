@@ -1,10 +1,10 @@
 import { View as ViewRN } from "react-native";
 import { Text } from "@/shared/ui";
-import useStore from "../useStore";
+import { useAccelerometerPosition } from "../hooks";
 import { InfoItem } from "./components";
 
 const View = () => {
-  const position = useStore((state) => state.position);
+  const position = useAccelerometerPosition();
 
   if (!position) {
     return undefined;
