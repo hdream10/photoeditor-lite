@@ -1,24 +1,33 @@
 import { useState, useCallback } from "react";
 import * as MediaLibrary from "expo-media-library";
+import { usePhotoHistory } from "@/entities/PhotoHistory";
 
 type TPhotoData = {
   uri: string;
 };
 
 const usePhotoSave = () => {
+  const { addPhoto } = usePhotoHistory();
+
   const [isSaving, setIsSaving] = useState(false);
 
-  const savePhoto = useCallback(async (photoData: TPhotoData) => {
-    setIsSaving(true);
+  const savePhoto = useCallback(
+    (photoData: TPhotoData) => {
+      setIsSaving(true);
 
-    MediaLibrary.saveToLibraryAsync(photoData.uri)
-      .catch((error) => {
-        console.error("Failed to save photo", error);
-      })
-      .finally(() => {
-        setIsSaving(false);
-      });
-  }, []);
+      MediaLibrary.saveToLibraryAsync(photoData.uri)
+        .then(() => {
+          addPhoto(photoData.uri);
+        })
+        .catch((error) => {
+          console.error("Failed to save photo", error);
+        })
+        .finally(() => {
+          setIsSaving(false);
+        });
+    },
+    [addPhoto]
+  );
 
   return {
     isSaving,

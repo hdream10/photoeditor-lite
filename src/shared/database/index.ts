@@ -1,1 +1,1 @@
-export { SQLiteClient } from "./SQLiteClient";
+export { default as SQLiteClient } from "./SQLiteClient";
