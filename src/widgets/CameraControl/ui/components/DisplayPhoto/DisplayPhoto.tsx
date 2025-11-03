@@ -6,13 +6,30 @@ type TProps = {
   photoSrc: string;
   onEdit: () => void;
   onBack: () => void;
+  onSave: (photoData: { uri: string }) => void;
 };
 
-const DisplayPhoto: React.FC<TProps> = ({ photoSrc, onEdit, onBack }) => {
+const DisplayPhoto: React.FC<TProps> = ({
+  photoSrc,
+  onEdit,
+  onBack,
+  onSave,
+}) => {
+  const handleSave = () => {
+    onSave({ uri: photoSrc });
+  };
+
   return (
     <ViewRN style={styles.container}>
-      <Image source={{ uri: photoSrc }} resizeMode="contain" style={styles.image} />
+      <Image
+        source={{ uri: photoSrc }}
+        resizeMode="contain"
+        style={styles.image}
+      />
       <ViewRN style={styles.actions}>
+        <Button onPress={handleSave} variant="primary" style={styles.button}>
+          <Text style={styles.buttonText}>💾 Сохранить</Text>
+        </Button>
         <Button onPress={onEdit} variant="primary" style={styles.button}>
           <Text style={styles.buttonText}>✏️ Редактировать</Text>
         </Button>
@@ -25,4 +42,3 @@ const DisplayPhoto: React.FC<TProps> = ({ photoSrc, onEdit, onBack }) => {
 };
 
 export default DisplayPhoto;
-

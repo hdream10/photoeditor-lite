@@ -3,7 +3,7 @@ import {
   PanResponder,
   GestureResponderEvent,
 } from "react-native";
-import { useMemo } from "react";
+import { forwardRef, useMemo } from "react";
 import { Svg, Path } from "react-native-svg";
 import { Image as ImageComponent } from "@/shared/ui";
 import type { TPoint, TPath } from "../../../hooks";
@@ -18,20 +18,24 @@ type TProps = {
   onStopDrawing: () => void;
 };
 
-const DrawingCanvas: React.FC<TProps> = ({
-  photoSrc,
-  paths,
-  currentPath,
-  onStartDrawing,
-  onContinueDrawing,
-  onStopDrawing,
-}) => {
-  const getPointFromEvent = (event: GestureResponderEvent): TPoint => {
-    const { locationX, locationY } = event.nativeEvent;
-    return { x: locationX, y: locationY };
-  };
+const DrawingCanvas = forwardRef<ViewRN, TProps>(
+  (
+    {
+      photoSrc,
+      paths,
+      currentPath,
+      onStartDrawing,
+      onContinueDrawing,
+      onStopDrawing,
+    },
+    ref
+  ) => {
+    const getPointFromEvent = (event: GestureResponderEvent): TPoint => {
+      const { locationX, locationY } = event.nativeEvent;
+      return { x: locationX, y: locationY };
+    };
 
-  const panResponder = useMemo(
+    const panResponder = useMemo(
     () =>
       PanResponder.create({
         onStartShouldSetPanResponder: () => true,
@@ -49,43 +53,46 @@ const DrawingCanvas: React.FC<TProps> = ({
           onStopDrawing();
         },
       }),
-    [onStartDrawing, onContinueDrawing, onStopDrawing]
-  );
+      [onStartDrawing, onContinueDrawing, onStopDrawing]
+    );
 
-  const pathToSvgPath = (path: TPath): string => {
-    if (path.points.length === 0) return "";
-    if (path.points.length === 1) {
-      const point = path.points[0];
-      return `M ${point.x} ${point.y} L ${point.x} ${point.y}`;
-    }
+    const pathToSvgPath = (path: TPath): string => {
+      if (path.points.length === 0) return "";
+      if (path.points.length === 1) {
+        const point = path.points[0];
+        return `M ${point.x} ${point.y} L ${point.x} ${point.y}`;
+      }
 
-    let svgPath = `M ${path.points[0].x} ${path.points[0].y}`;
-    for (let i = 1; i < path.points.length; i++) {
-      svgPath += ` L ${path.points[i].x} ${path.points[i].y}`;
-    }
-    return svgPath;
-  };
+      let svgPath = `M ${path.points[0].x} ${path.points[0].y}`;
+      for (let i = 1; i < path.points.length; i++) {
+        svgPath += ` L ${path.points[i].x} ${path.points[i].y}`;
+      }
+      return svgPath;
+    };
 
-  const allPaths = currentPath ? [...paths, currentPath] : paths;
+    const allPaths = currentPath ? [...paths, currentPath] : paths;
 
-  return (
-    <ViewRN style={styles.container} {...panResponder.panHandlers}>
-      <ImageComponent source={{ uri: photoSrc }} style={styles.image} />
-      <Svg style={styles.svg} width="100%" height="100%">
-        {allPaths.map((path, index) => (
-          <Path
-            key={index}
-            d={pathToSvgPath(path)}
-            stroke={path.color}
-            strokeWidth={path.strokeWidth}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            fill="none"
-          />
-        ))}
-      </Svg>
-    </ViewRN>
-  );
-};
+    return (
+      <ViewRN ref={ref} style={styles.container} {...panResponder.panHandlers}>
+        <ImageComponent source={{ uri: photoSrc }} style={styles.image} />
+        <Svg style={styles.svg} width="100%" height="100%">
+          {allPaths.map((path, index) => (
+            <Path
+              key={index}
+              d={pathToSvgPath(path)}
+              stroke={path.color}
+              strokeWidth={path.strokeWidth}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              fill="none"
+            />
+          ))}
+        </Svg>
+      </ViewRN>
+    );
+  }
+);
+
+DrawingCanvas.displayName = "DrawingCanvas";
 
 export default DrawingCanvas;
