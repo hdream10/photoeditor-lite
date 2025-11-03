@@ -2,25 +2,33 @@ import { useRef } from "react";
 import { CameraView } from "expo-camera";
 import { CameraContainer } from "@/shared/ui";
 import { CameraActions } from "../CameraActions";
+import { useCameraFacing } from "../../../hooks";
 
-type TCameraHook = ReturnType<typeof import("../../../hooks/useCamera").default>;
+type TCamera = {
+  photoSrc: string | undefined;
+  isTakingPhoto: boolean;
+  takePhoto: (cameraRef: React.RefObject<CameraView | null>) => void;
+  reset: () => void;
+};
 
 type TProps = {
-  camera: TCameraHook;
+  camera: TCamera;
 };
 
 const DisplayCamera: React.FC<TProps> = ({ camera }) => {
-  const cameraRef = useRef<CameraView>(null);
+  const cameraRef = useRef<CameraView | null>(null);
+
+  const { facing, toggleFacing } = useCameraFacing();
 
   const handleTakePhoto = () => {
     camera.takePhoto(cameraRef);
   };
 
   return (
-    <CameraContainer facing={camera.facing} cameraRef={cameraRef}>
+    <CameraContainer facing={facing} ref={cameraRef}>
       <CameraActions
         onTakePhoto={handleTakePhoto}
-        onToggleFacing={camera.toggleFacing}
+        onToggleFacing={toggleFacing}
         disabled={camera.isTakingPhoto}
       />
     </CameraContainer>

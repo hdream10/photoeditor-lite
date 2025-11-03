@@ -5,23 +5,30 @@ const useCameraPhoto = () => {
   const [photoSrc, setPhotoSrc] = useState<string | undefined>(undefined);
   const [isTakingPhoto, setIsTakingPhoto] = useState(false);
 
-  const takePhoto = useCallback(async (cameraRef: React.RefObject<CameraView>) => {
-    if (!cameraRef.current) {
-      return;
-    }
-
-    setIsTakingPhoto(true);
-    try {
-      const photo = await cameraRef.current.takePictureAsync();
-      if (photo?.uri) {
-        setPhotoSrc(photo.uri);
+  const takePhoto = useCallback(
+    async (cameraRef: React.RefObject<CameraView | null>) => {
+      if (!cameraRef.current) {
+        return;
       }
-    } catch (error) {
-      console.error("Failed to take photo", error);
-    } finally {
-      setIsTakingPhoto(false);
-    }
-  }, []);
+
+      setIsTakingPhoto(true);
+
+      cameraRef.current
+        .takePictureAsync()
+        .then((photo) => {
+          if (photo?.uri) {
+            setPhotoSrc(photo.uri);
+          }
+        })
+        .catch((error) => {
+          console.error("Failed to take photo", error);
+        })
+        .finally(() => {
+          setIsTakingPhoto(false);
+        });
+    },
+    []
+  );
 
   const reset = useCallback(() => {
     setPhotoSrc(undefined);
@@ -36,4 +43,3 @@ const useCameraPhoto = () => {
 };
 
 export default useCameraPhoto;
-

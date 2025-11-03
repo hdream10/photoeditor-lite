@@ -1,10 +1,9 @@
 import { View as ViewRN } from "react-native";
 import { Text } from "@/shared/ui";
 import { InfoItem } from "./components";
-import { useSystemInfo } from "../hooks";
+import { modelName, osName, osVersion } from "expo-device";
 
 const View = () => {
-  const { modelName, osName, osVersion } = useSystemInfo();
 
   return (
     <ViewRN>

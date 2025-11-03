@@ -1,45 +1,29 @@
-import { useState, useEffect } from "react";
-import { useCameraPermissions as useCameraPermissionsExpo } from "expo-camera";
-
-type TPermissionStatus =
-  | "idle"
-  | "in-progress"
-  | "granted"
-  | "denied"
-  | "failed";
+import { useEffect } from "react";
+import {
+  PermissionStatus,
+  useCameraPermissions as useCameraPermissionsExpo,
+} from "expo-camera";
 
 const useCameraPermissions = () => {
   const [permission, requestPermission] = useCameraPermissionsExpo();
-  const [status, setStatus] = useState<TPermissionStatus>("idle");
+
+  const isNotReady = !permission;
+  const isGranted = permission?.status === PermissionStatus.GRANTED;
+  const isDenied = permission?.status === PermissionStatus.DENIED;
+  const isUndetermined = permission?.status === PermissionStatus.UNDETERMINED;
 
   useEffect(() => {
-    const handleRequestPermission = async () => {
-      setStatus("in-progress");
-      try {
-        const result = await requestPermission();
-        if (result.granted) {
-          setStatus("granted");
-        } else {
-          setStatus("denied");
-        }
-      } catch (error) {
-        console.error("Failed to request camera permission", error);
-        setStatus("failed");
-      }
-    };
-
-    if (!permission) {
-      handleRequestPermission();
-    } else if (permission.granted) {
-      setStatus("granted");
-    } else if (permission.canAskAgain) {
-      handleRequestPermission();
-    } else {
-      setStatus("denied");
+    if (isNotReady) {
+      requestPermission();
     }
-  }, [permission, requestPermission]);
+  }, [isNotReady, requestPermission]);
 
-  return status;
+  return {
+    isNotReady,
+    isGranted,
+    isDenied,
+    isUndetermined,
+  };
 };
 
 export default useCameraPermissions;

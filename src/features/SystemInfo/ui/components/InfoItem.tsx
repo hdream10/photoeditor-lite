@@ -3,7 +3,7 @@ import { Text } from "@/shared/ui";
 
 type TProps = {
   label: string;
-  value?: string;
+  value: string | null;
 };
 
 const InfoItem: React.FC<TProps> = ({ label, value }) => {

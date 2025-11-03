@@ -1,20 +1,23 @@
 import { Text } from "@/shared/ui";
 import { DisplayCamera, DisplayPhoto } from "./components";
-import { useCamera } from "../hooks";
+import { useCameraPermissions, useCameraPhoto } from "../hooks";
 
 const View = () => {
-  const camera = useCamera();
+  const { isNotReady, isDenied, isUndetermined } =
+    useCameraPermissions();
 
-  if (camera.permissionStatus === "in-progress") {
-    return <Text>Permission in progress</Text>;
+  const camera = useCameraPhoto();
+
+  if (isNotReady) {
+    return <Text>Permission is not ready</Text>;
   }
 
-  if (camera.permissionStatus === "denied") {
-    return <Text>Permission denied</Text>;
+  if (isDenied) {
+    return <Text>Permission is denied</Text>;
   }
 
-  if (camera.permissionStatus === "failed") {
-    return <Text>Permission failed</Text>;
+  if (isUndetermined) {
+    return <Text>Permission undetermined</Text>;
   }
 
   if (camera.photoSrc) {
