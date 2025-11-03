@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { customColors } from "@/shared/theme";
 
 export const styles = StyleSheet.create({
   container: {
@@ -7,7 +8,7 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 40,
     paddingVertical: 20,
-    backgroundColor: "rgba(0, 0, 0, 0.3)",
+    backgroundColor: customColors.blackTransparent,
   },
   photoButton: {
     width: 60,
@@ -21,7 +22,7 @@ export const styles = StyleSheet.create({
   },
   icon: {
     fontSize: 24,
-    color: "#FFFFFF",
+    color: customColors.white,
     fontWeight: "bold",
   },
 });

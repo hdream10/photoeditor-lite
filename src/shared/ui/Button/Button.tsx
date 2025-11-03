@@ -1,4 +1,4 @@
-import { TouchableOpacity, ViewStyle } from "react-native";
+import { TouchableOpacity, ViewStyle, Text } from "react-native";
 import { styles } from "./Button.styles";
 
 type TProps = {
@@ -28,7 +28,11 @@ const Button: React.FC<TProps> = ({
       disabled={disabled}
       activeOpacity={0.7}
     >
-      {children}
+      {typeof children === "string" ? (
+        <Text style={styles.text}>{children}</Text>
+      ) : (
+        children
+      )}
     </TouchableOpacity>
   );
 };

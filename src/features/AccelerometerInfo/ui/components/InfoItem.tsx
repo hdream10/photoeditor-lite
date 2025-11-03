@@ -1,5 +1,6 @@
 import { View as ViewRN } from "react-native";
 import { Text } from "@/shared/ui";
+import { styles } from "./InfoItem.styles";
 
 type TProps = {
   label: string;
@@ -8,9 +9,13 @@ type TProps = {
 
 const InfoItem: React.FC<TProps> = ({ label, value }) => {
   return (
-    <ViewRN>
-      <Text variant="body">{label}:</Text>
-      <Text variant="body">{value}</Text>
+    <ViewRN style={styles.container}>
+      <Text variant="subtitle" style={styles.label}>
+        {label}:
+      </Text>
+      <Text variant="body" style={styles.value}>
+        {value.toFixed(2)}
+      </Text>
     </ViewRN>
   );
 };

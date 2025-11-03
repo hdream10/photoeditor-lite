@@ -8,7 +8,7 @@ type TProps = {
 const MenuButton: React.FC<TProps> = ({ onPress }) => {
   return (
     <TouchableOpacity style={styles.button} onPress={onPress}>
-      <Text style={styles.icon}>☰</Text>
+      <Text style={styles.text}>МЕНЮ</Text>
     </TouchableOpacity>
   );
 };

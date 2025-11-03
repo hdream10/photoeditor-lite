@@ -1,5 +1,4 @@
-import { View as ViewRN } from "react-native";
-import { Text } from "@/shared/ui";
+import { Section } from "@/shared/ui";
 import { useAccelerometerPosition } from "../hooks";
 import { InfoItem } from "./components";
 
@@ -11,15 +10,11 @@ const View = () => {
   }
 
   return (
-    <ViewRN>
-      <Text variant="title">Информация о акселерометре</Text>
-
-      <ViewRN>
-        <InfoItem label="Положение x" value={position.x} />
-        <InfoItem label="Положение y" value={position.y} />
-        <InfoItem label="Положение z" value={position.z} />
-      </ViewRN>
-    </ViewRN>
+    <Section title="Информация о акселерометре">
+      <InfoItem label="Положение x" value={position.x} />
+      <InfoItem label="Положение y" value={position.y} />
+      <InfoItem label="Положение z" value={position.z} />
+    </Section>
   );
 };
 

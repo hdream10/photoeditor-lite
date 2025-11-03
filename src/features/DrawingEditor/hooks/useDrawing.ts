@@ -1,6 +1,7 @@
 import { useState, useCallback } from "react";
+import { customColors } from "@/shared/theme";
 
-const PEN_COLOR = "#000000";
+const PEN_COLOR = customColors.error;
 const PEN_STROKE_WIDTH = 4;
 
 export type TPoint = {

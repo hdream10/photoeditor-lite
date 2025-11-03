@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { CameraView } from "expo-camera";
-import { CameraContainer } from "@/shared/ui";
+import { CameraContainer } from "../CameraContainer";
 import { CameraActions } from "../CameraActions";
 import { useCameraFacing } from "../../../hooks";
 

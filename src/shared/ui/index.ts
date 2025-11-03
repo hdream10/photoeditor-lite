@@ -1,6 +1,9 @@
 export { MenuButton } from "./MenuButton";
 export { Container } from "./Container";
+export { PageContainer } from "./PageContainer";
+export { Section } from "./Section";
+export { Spacer } from "./Spacer";
 export { Text } from "./Text";
 export { Button } from "./Button";
 export { Image } from "./Image";
-export { CameraContainer } from "./CameraContainer";
+export { Loader } from "./Loader";

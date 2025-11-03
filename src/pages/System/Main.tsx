@@ -1,13 +1,14 @@
-import { View } from "react-native";
+import { PageContainer, Spacer } from "@/shared/ui";
 import { SystemInfo } from "@/features/SystemInfo";
 import { AccelerometerInfo } from "@/features/AccelerometerInfo";
 
 const Main = () => {
   return (
-    <View>
+    <PageContainer>
       <SystemInfo />
+      <Spacer />
       <AccelerometerInfo />
-    </View>
+    </PageContainer>
   );
 };
 

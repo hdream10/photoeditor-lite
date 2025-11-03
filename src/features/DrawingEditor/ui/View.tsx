@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { View as ViewRN } from "react-native";
-import { DrawingCanvas, DrawingToolbar } from "./components";
+import { DrawingCanvas, DrawingToolbar, DrawingContainer } from "./components";
 import { useDrawing, useDrawingSave } from "../hooks";
 
 type TProps = {
@@ -25,7 +25,7 @@ const View: React.FC<TProps> = ({ photoSrc, onBack, onSave }) => {
   const { save } = useDrawingSave(canvasRef, onSave);
 
   return (
-    <ViewRN style={{ flex: 1 }}>
+    <DrawingContainer>
       <DrawingCanvas
         ref={canvasRef}
         photoSrc={photoSrc}
@@ -42,7 +42,7 @@ const View: React.FC<TProps> = ({ photoSrc, onBack, onSave }) => {
         onBack={onBack}
         canUndo={paths.length > 0}
       />
-    </ViewRN>
+    </DrawingContainer>
   );
 };
 

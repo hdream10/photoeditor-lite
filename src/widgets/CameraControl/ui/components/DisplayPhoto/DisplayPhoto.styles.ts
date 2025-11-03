@@ -1,10 +1,12 @@
 import { StyleSheet } from "react-native";
+import { customColors } from "@/shared/theme";
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: customColors.background,
   },
   image: {
     width: "100%",
@@ -27,7 +29,7 @@ export const styles = StyleSheet.create({
     minWidth: 140,
   },
   buttonText: {
-    color: "#ffffff",
+    color: customColors.text,
     fontSize: 16,
     fontWeight: "600",
   },

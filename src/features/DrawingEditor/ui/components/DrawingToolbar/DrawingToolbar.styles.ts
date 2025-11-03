@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { customColors } from "@/shared/theme";
 
 export const styles = StyleSheet.create({
   container: {
@@ -7,9 +8,9 @@ export const styles = StyleSheet.create({
     alignItems: "center",
     paddingHorizontal: 20,
     paddingVertical: 15,
-    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    backgroundColor: customColors.primaryDark,
     borderTopWidth: 1,
-    borderTopColor: "rgba(0, 0, 0, 0.1)",
+    borderTopColor: customColors.divider,
   },
   button: {
     paddingHorizontal: 15,
@@ -20,6 +21,6 @@ export const styles = StyleSheet.create({
   buttonText: {
     fontSize: 14,
     fontWeight: "500",
+    color: customColors.text,
   },
 });
-
